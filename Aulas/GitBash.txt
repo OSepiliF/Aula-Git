@@ -1,6 +1,0 @@
-# cd Pasta/Selecionada
-# git checkout Teste
-# git pull
-# git add .
-# git commit -m "nome"
-# git push
