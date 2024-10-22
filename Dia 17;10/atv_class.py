@@ -10,29 +10,30 @@ class Animal:
 
     def movimentar(self):
         print(f"{self.nome} está se movendo...")
-class Chordata(Animal):
-    def __init__(self, nome, nome_cientifico, nutricao, habitat, nervoso_dorsal, endoesqueleto):
+
+class Vertebrados(Animal):
+    def __init__(self, nome, nome_cientifico, nutricao, habitat):
         super().__init__(nome, nome_cientifico, nutricao, habitat)
-        self.nervoso_dorsal = nervoso_dorsal
-        self.endoesqueleto = endoesqueleto
+        self.nervoso_dorsal = True
+        self.endoesqueleto = True 
 
     def caracteristicas_filo(self):
-        print("O filo Chordata é caracterizado pela presença de um nervoso dorsal, "
+        print("O filo Vertebrados é caracterizado pela presença de um nervoso dorsal, "
               "um endoesqueleto e estruturas relacionadas ao sistema nervoso.")
 
-class Mamiferos(Chordata):
-    def __init__(self, nome, nome_cientifico, nutricao, habitat, nervoso_dorsal, endoesqueleto, mamarias, endotermicos, orelhas):
-        super().__init__(nome, nome_cientifico, nutricao, habitat, nervoso_dorsal, endoesqueleto)
-        self.mamarias = mamarias
-        self.endotermicos = endotermicos
-        self.orelhas = orelhas
+class Mamiferos(Vertebrados):
+    def __init__(self, nome, nome_cientifico, nutricao, habitat):
+        super().__init__(nome, nome_cientifico, nutricao, habitat)
+        self.mamarias = True  
+        self.endotermicos = True  
+        self.orelhas = True  
 
     def amamentar(self):
         print(f"{self.nome} está amamentando os filhotes.")
 
 class Carnivora(Mamiferos):
-    def __init__(self, nome, nome_cientifico, nutricao, habitat, nervoso_dorsal, endoesqueleto, mamarias, endotermicos, orelhas, caninos_molares, pelagem_peltada):
-        super().__init__(nome, nome_cientifico, nutricao, habitat, nervoso_dorsal, endoesqueleto, mamarias, endotermicos, orelhas)
+    def __init__(self, nome, nome_cientifico, nutricao, habitat, caninos_molares, pelagem_peltada):
+        super().__init__(nome, nome_cientifico, nutricao, habitat)
         self.caninos_molares = caninos_molares
         self.pelagem_peltada = pelagem_peltada
 
@@ -40,10 +41,10 @@ class Carnivora(Mamiferos):
         print(f"{self.nome} usa suas habilidades de caça para pegar presas.")
 
 class Canideos(Carnivora):
-    def __init__(self, nome, nome_cientifico, nutricao, habitat, nervoso_dorsal, endoesqueleto, mamarias, endotermicos, orelhas, caninos_molares, pelagem_peltada, territorialidade, org_jacobson):
-        super().__init__(nome, nome_cientifico, nutricao, habitat, nervoso_dorsal, endoesqueleto, mamarias, endotermicos, orelhas, caninos_molares, pelagem_peltada)
+    def __init__(self, nome, nome_cientifico, nutricao, habitat, territorialidade, org_vomeronasal):
+        super().__init__(nome, nome_cientifico, nutricao, habitat, True, True)
         self.territorialidade = territorialidade
-        self.org_jacobson = org_jacobson
+        self.org_vomeronasal = org_vomeronasal
     
     def marcar_territorio(self):
         print(f"{self.nome} está marcando seu território.")
@@ -55,15 +56,8 @@ class Leão(Canideos):
             nome_cientifico="Panthera leo",
             nutricao="Carnívoro",
             habitat="Savana e florestas",
-            nervoso_dorsal="Sim",
-            endoesqueleto="Sim",
-            mamarias="Sim",
-            endotermicos="Sim",
-            orelhas="Sim",
-            caninos_molares="Sim",
-            pelagem_peltada="Sim",
             territorialidade="Alfa",
-            org_jacobson="Sim"
+            org_vomeronasal=True
         )
 
     def rugir(self):
@@ -75,12 +69,7 @@ class Ornitorrinco(Mamiferos):
             nome="Ornitorrinco",
             nome_cientifico="Ornithorhynchus anatinus",
             nutricao="Onívoro",
-            habitat="Água doce",
-            nervoso_dorsal="Sim",
-            endoesqueleto="Sim",
-            mamarias="Sim",
-            endotermicos="Sim",
-            orelhas="Sim"
+            habitat="Água doce"
         )
 
     def botar_ovo(self):
@@ -92,28 +81,19 @@ class Morcego(Mamiferos):
             nome="Morcego",
             nome_cientifico="Chiroptera",
             nutricao="Insetívoro",
-            habitat="Cavernas e florestas",
-            nervoso_dorsal="Sim",
-            endoesqueleto="Sim",
-            mamarias="Sim",
-            endotermicos="Sim",
-            orelhas="Sim"
+            habitat="Cavernas e florestas"
         )
 
     def voar(self):
         print(f"{self.nome} está voando de forma noturna.")
+
 class Baleia(Mamiferos):
     def __init__(self):
         super().__init__(
             nome="Baleia",
             nome_cientifico="Balaenoptera musculus",
             nutricao="Plâncton",
-            habitat="Oceanos",
-            nervoso_dorsal="Sim",
-            endoesqueleto="Sim",
-            mamarias="Sim",
-            endotermicos="Sim",
-            orelhas="Sim"
+            habitat="Oceanos"
         )
 
     def cantar(self):
@@ -132,22 +112,22 @@ def exibir_informacoes(animal):
 <<<-------------------------------------------------------------->>>
 | Nutrição: {animal.nutricao}
 | Habitat: {animal.habitat}
-| Nervoso Dorsal: {animal.nervoso_dorsal}
-| Endoesqueleto: {animal.endoesqueleto}
-| Mamárias: {animal.mamarias}
-| Endotérmicos: {animal.endotermicos}
-| Orelhas: {animal.orelhas}""")
+| Nervoso Dorsal: {'Sim' if animal.nervoso_dorsal else 'Não'}
+| Endoesqueleto: {'Sim' if animal.endoesqueleto else 'Não'}
+| Mamárias: {'Sim' if animal.mamarias else 'Não'}
+| Endotérmicos: {'Sim' if animal.endotermicos else 'Não'}
+| Orelhas: {'Sim' if animal.orelhas else 'Não'}""")
     if isinstance(animal, Canideos):
-        print(f"""| Caninos/Molares: {animal.caninos_molares}
-| Pelagem Peltada: {animal.pelagem_peltada}
+        print(f"""| Caninos/Molares: {'Sim' if animal.caninos_molares else 'Não '}
+| Pelagem Peltada: {'Sim' if animal.pelagem_peltada else 'Não'}
 | Territorialidade: {animal.territorialidade}
-| Órgão de Jacobson: {animal.org_jacobson}
+| Órgão vomeronasal: {'Sim' if animal.org_vomeronasal else 'Não'}
 <<<-------------------------------------------------------------->>>
 """)
     if isinstance(animal, Mamiferos) and not isinstance(animal, Canideos):
         print("""<<<-------------------------------------------------------------->>>
 """)
-        
+
 while True:
     try:
         escolha = int(input(""" 
