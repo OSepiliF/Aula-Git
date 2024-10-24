@@ -1,49 +1,17 @@
-class Livro():
-    def __init__(self, titulo, autor, cod_livro):
-        self.titulo = titulo
-        self.autor = autor
-        self.status = 'Disponivel'
-        self.cod_livro = cod_livro
-        self.usuario = None
+from livros import Livros
+from usuario import Usuario
 
-    def emprest_livro(self, usuario):
-        if self.status != 'Disponivel':
-            return
-        
-        self.usuario = usuario
-        self.status = 'Emprestado'
+class Biblioteca:
+    acervo = []
+    @staticmethod
+    def emprestar(usuario: Usuario, livros: list[Livros]) -> bool:
+        for item in livros:
+            if len(usuario.lista_livros) == usuario.max_emprestimo:
+                break
+            livros.emprestar(usuario)
+            usuario.pegar_emprestado(item)
+        return True
 
-    def devolv_livro(self):
-        if self.status != 'Emprestado':
-            return
-        
-        self.usuario = None
-        self.status = 'Disponivel'
-
-class Usuario:
-    max_emprestimo = 3
-
-    def __init__(self, nome_user, cpf, telefone):
-        self.nome_user = nome_user
-        self.cpf = cpf
-        self.telefone = telefone
-        self.lista_livros = []
-
-    def pegar_emprestado(self, livro):
-        if len(self.lista_livros) >= self.max_emprestimo:
-            print(f'{self.nome_user} não pode pegar mais livros. Limite de {self.max_emprestimo} atingido.')
-            return False
-        
-        if livro.emprest_livro(self):
-            self.lista_livros.append(livro.titulo)
-            return True
-        return False
-
-    def devolver_livro(self, livro):
-        if livro.titulo in self.lista_livros:
-            if livro.devolv_livro():
-                self.lista_livros.remove(livro.titulo)
-                return True
-        else:
-            print(f'{self.nome_user} não possui o livro "{livro.titulo}".')
-            return False
+    @staticmethod
+    def devolver(livros: Livros, usuario: Usuario):
+        livros.devolv_livro()
